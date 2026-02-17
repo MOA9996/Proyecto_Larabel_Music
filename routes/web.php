@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AlbumController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/albums');
 });
+
+Route::resource('albums', AlbumController::class);
