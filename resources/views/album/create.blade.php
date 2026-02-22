@@ -5,8 +5,17 @@
 @section('content')
     <h1>Agregar Nuevo Álbum</h1>
 
-    <form action="{{ route('albums.store') }}" method="POST">
+    <form action="{{ route('albums.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+        @if ($errors->any())
+            <div style="color:red">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
         <label>Título:</label><br>
         <input type="text" name="titulo" required><br><br>
@@ -32,8 +41,8 @@
         <label>Formato:</label><br>
         <input type="text" name="formato" required><br><br>
 
-        <label>Portada (URL):</label><br>
-        <input type="url" name="portada" required><br><br>
+        <label>Portada (Imagen):</label><br>
+        <input type="file" name="portada" accept="image/*"><br><br>
 
         <button type="submit">Guardar</button>
         <a href="{{ route('albums.index') }}">Cancelar</a>

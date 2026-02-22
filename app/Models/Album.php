@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Album extends Model
 {
     // Laravel detecta automáticamente que la tabla es 'albums'
     // No necesitas definir $table a menos que uses un nombre personalizado
-
+    use HasFactory;
     protected $fillable = [
         'titulo',
         'artista',
@@ -20,7 +21,6 @@ class Album extends Model
         'formato',
         'portada',
         'user_id',
-        'average_rating',
     ];
 
     protected $casts = [
@@ -29,6 +29,8 @@ class Album extends Model
         'duracion_total' => 'integer',
         'average_rating' => 'decimal:2',
     ];
+
+
 
 
     public function user()

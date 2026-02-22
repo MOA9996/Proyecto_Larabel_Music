@@ -30,8 +30,7 @@ class StoreAlbumRequest extends FormRequest
             'anio'          => 'required|integer|min:1900|max:' . date('Y'),
             'genero'        => 'required|string|max:100',
             'formato'       => 'required|string|max:50',
-            'portada'       => 'nullable|url|max:500',
-        ];
+            'portada' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',        ];
     }
     public function messages(): array
     {
@@ -64,8 +63,9 @@ class StoreAlbumRequest extends FormRequest
             'formato.required' => 'El formato es obligatorio',
             'formato.max' => 'El formato no puede tener más de 50 caracteres',
 
-            'portada.url' => 'La portada debe ser una URL válida',
-            'portada.max' => 'La URL de la portada es demasiado larga',
+            'portada.image' => 'La portada debe ser una imagen',
+            'portada.mimes' => 'La portada debe ser jpeg, png, jpg o webp',
+            'portada.max'   => 'La imagen no puede pesar más de 2MB',
         ];
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layout.layout')
 
 @section('title', 'Detalle del Album')
 
@@ -12,7 +12,7 @@
     <p><strong>Numero de pistas:</strong> {{ $album->numero_pistas}}</p>
     <p><strong>Duracion Total (minutos): {{$album->duracion_total}}</strong></p>
     <p><strong>Formato:{{$album->formato}}</strong></p>
-    <p><strong>Portada:{{$album->portada}}</strong></p>
+    <p><strong>Portada:<img src="{{ asset('storage/' . $album->portada) }}" alt="{{ $album->titulo }}" width="200"></strong></p>
     <br>
 
     <a href="{{ route('albums.index') }}" class="btn">← Volver</a>

@@ -19,10 +19,10 @@
     <tbody>
     @foreach($albums as $album)
         <tr>
-            <td>{{ $album->portada }}</td >
+           <td><img src="{{ asset('storage/' . $album->portada) }}" alt="{{ $album->titulo }}" width="200"></td>
             <td>{{ $album->titulo }}</td>
             <td>{{ $album->artista }}</td>
-            <tr href="{{route('albums.show',$album->id)}}">Ver más</tr>
+            <td><a href="{{route('albums.show',$album->id)}}">Ver más</a> </td>
         </tr>
     @endforeach
     </tbody>

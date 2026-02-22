@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAlbumRequest;
 use App\Http\Requests\UpdateAlbumRequest;
 use App\Models\Album;
+use Illuminate\Support\Facades\Storage;
+
 
 class AlbumController extends Controller
 {
@@ -24,6 +26,13 @@ class AlbumController extends Controller
         $validated = $request->validated();
         $validated['user_id'] = auth()->id();
 
+        if ($request->hasFile('portada')) {
+            $validated['portada'] = $request->file('portada')
+                ->store('portadas', 'public');
+        } else {
+            $validated['portada'] = 'portadas/default.jpg';
+        }
+
         Album::create($validated);
 
         return redirect()->route('albums.index')
@@ -32,19 +41,31 @@ class AlbumController extends Controller
 
     public function show($id)
     {
-        $album=Album::findOrFail($id);
-        return view('albums.show', compact('album'));
+        $album = Album::findOrFail($id);
+        return view('album.show', compact('album'));
     }
 
     public function edit($id)
     {
-        $album=Album::findOrFail($id);
+        $album = Album::findOrFail($id);
         return view('albums.edit', compact('album'));
     }
 
     public function update(UpdateAlbumRequest $request, Album $album)
     {
-        $album->update($request->validated());
+        $validated = $request->validated();
+
+        if ($request->hasFile('portada')) {
+            // Eliminar imagen antigua si no es la por defecto
+            if ($album->portada && $album->portada !== 'portadas/default.jpg') {
+                Storage::disk('public')->delete($album->portada);
+            }
+
+            $validated['portada'] = $request->file('portada')
+                ->store('portadas', 'public');
+        }
+
+        $album->update($validated);
 
         return redirect()->route('albums.index')
             ->with('success', 'Álbum actualizado correctamente! :)');
@@ -52,7 +73,13 @@ class AlbumController extends Controller
 
     public function destroy($id)
     {
-        $album=Album::findOrFail($id);
+        $album = Album::findOrFail($id);
+
+        // Eliminar imagen si no es la por defecto
+        if ($album->portada && $album->portada !== 'portadas/default.jpg') {
+            Storage::disk('public')->delete($album->portada);
+        }
+
         $album->delete();
 
         return redirect()->route('albums.index')

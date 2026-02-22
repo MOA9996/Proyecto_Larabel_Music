@@ -17,19 +17,17 @@ return new class extends Migration
             $table->string('titulo', 300);
             $table->string('artista', 300);
             $table->integer('anio');
-            $table->string('genero',300);
-            $table->string('discografica',300);
+            $table->string('genero', 300);
+            $table->string('discografica', 300);
             $table->integer('numero_pistas')->nullable();
             $table->integer('duracion_total');
-            $table->string('formato',300)->nullable();
-            $table->string('portada',300)->nullable();
-
-
+            $table->string('formato', 300)->nullable();
+            $table->string('portada', 500)->nullable();
 
             $table->foreignId('user_id')
+                ->nullable()
                 ->constrained()
                 ->onDelete('cascade');
-
 
             $table->decimal('average_rating', 3, 2)->default(0);
 
