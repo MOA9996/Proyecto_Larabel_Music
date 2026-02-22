@@ -11,12 +11,12 @@ class AlbumController extends Controller
     public function index()
     {
         $albums = Album::all();
-        return view('albums.index', compact('albums'));
+        return view('album.index', compact('albums'));
     }
 
     public function create()
     {
-        return view('albums.create');
+        return view('album.create');
     }
 
     public function store(StoreAlbumRequest $request)
@@ -30,13 +30,15 @@ class AlbumController extends Controller
             ->with('success', 'Álbum creado correctamente! :)');
     }
 
-    public function show(Album $album)
+    public function show($id)
     {
+        $album=Album::findOrFail($id);
         return view('albums.show', compact('album'));
     }
 
-    public function edit(Album $album)
+    public function edit($id)
     {
+        $album=Album::findOrFail($id);
         return view('albums.edit', compact('album'));
     }
 
@@ -48,8 +50,9 @@ class AlbumController extends Controller
             ->with('success', 'Álbum actualizado correctamente! :)');
     }
 
-    public function destroy(Album $album)
+    public function destroy($id)
     {
+        $album=Album::findOrFail($id);
         $album->delete();
 
         return redirect()->route('albums.index')

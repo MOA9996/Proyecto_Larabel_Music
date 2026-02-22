@@ -22,17 +22,15 @@ class StoreAlbumRequest extends FormRequest
     public function rules(): array
     {
         return [
-           'titulo' => 'required | string | max: 225',
-            'artista' => 'required | string | max: 225',
-            'discografica' => 'required | string | max: 225',
-            'numero_pistas' => 'required | integer | min:1 | max:999',
-            'duracion_total' => 'required | integer | min:1 | max:999',
-            'anio' => 'required | integer | min:1900 | max:' . date('Y'),
-            'genero' => 'required | string | max 100',
-            'formato' => 'required|string|max:50',
-            'portada' => 'nullable|url|max:500',
-
-
+            'titulo'        => 'required|string|max:225',
+            'artista'       => 'required|string|max:225',
+            'discografica'  => 'required|string|max:225',
+            'numero_pistas' => 'required|integer|min:1|max:999',
+            'duracion_total'=> 'required|integer|min:1|max:999',
+            'anio'          => 'required|integer|min:1900|max:' . date('Y'),
+            'genero'        => 'required|string|max:100',
+            'formato'       => 'required|string|max:50',
+            'portada'       => 'nullable|url|max:500',
         ];
     }
     public function messages(): array
