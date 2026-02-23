@@ -48,7 +48,7 @@ class AlbumController extends Controller
     public function edit($id)
     {
         $album = Album::findOrFail($id);
-        return view('albums.edit', compact('album'));
+        return view('album.edit', compact('album'));
     }
 
     public function update(UpdateAlbumRequest $request, Album $album)

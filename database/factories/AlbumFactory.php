@@ -21,6 +21,7 @@ class AlbumFactory extends Factory
             'numero_pistas'    => $this->faker->numberBetween(1, 20),
             'duracion_total'   => $this->faker->numberBetween(20, 120),
             'portada'          => null,
+            'user_id'          => null,
         ];
     }
 }
