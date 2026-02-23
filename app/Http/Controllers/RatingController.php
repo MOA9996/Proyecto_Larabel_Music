@@ -34,8 +34,8 @@ class RatingController extends Controller
             ]);
         }
 
-        $promedio = Rating::where('album_id', $albumId)->avg('score');
-        Album::findOrFail($albumId)->update(['promedio' => round($promedio, 2)]);
+        $album = Album::findOrFail($albumId);
+        $album->updateAverageRating();
 
         return redirect()->route('albums.show', $albumId)
             ->with('success', 'Valoración guardada correctamente.');

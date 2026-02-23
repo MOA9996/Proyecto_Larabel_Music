@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Album extends Model
 {
-    // Laravel detecta automáticamente que la tabla es 'albums'
-    // No necesitas definir $table a menos que uses un nombre personalizado
     use HasFactory;
+
     protected $fillable = [
         'titulo',
         'artista',
@@ -21,6 +20,7 @@ class Album extends Model
         'formato',
         'portada',
         'user_id',
+        'average_rating',
     ];
 
     protected $casts = [
@@ -30,34 +30,24 @@ class Album extends Model
         'average_rating' => 'decimal:2',
     ];
 
-
-
-
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
 
     public function ratings()
     {
         return $this->hasMany(Rating::class);
     }
 
-
     public function reviews()
     {
         return $this->hasMany(Review::class);
     }
 
-
-    public function updateAverageRating()
+    public function updateAverageRating(): void
     {
         $average = $this->ratings()->avg('score');
-
-        // En caso de no haber ratings, se dejaría en 0 el average
-        $this->average_rating = $average ?? 0;
-
-        $this->save();
+        $this->update(['average_rating' => round($average ?? 0, 2)]);
     }
 }
